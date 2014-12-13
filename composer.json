@@ -16,7 +16,8 @@
 			"tests/TestCase.php"
 		],
 		"psr-4": {
-			"Gejl\\": "app/"
+			"GejlLaravel\\": "app/",
+			"Gejl\\": "Gejl/"
 		}
 	},
 	"scripts": {

@@ -1,4 +1,4 @@
-<?php namespace Gejl\Providers;
+<?php namespace GejlLaravel\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 

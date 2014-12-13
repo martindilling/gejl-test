@@ -1,4 +1,4 @@
-<?php namespace Gejl;
+<?php namespace GejlLaravel;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;

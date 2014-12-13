@@ -1,4 +1,4 @@
-<?php namespace Gejl\Providers;
+<?php namespace GejlLaravel\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider {
 
 		$this->app->bind(
 			'Illuminate\Contracts\Auth\Registrar',
-			'Gejl\Services\Registrar'
+			'GejlLaravel\Services\Registrar'
 		);
 	}
 

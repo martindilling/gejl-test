@@ -1,6 +1,6 @@
-<?php namespace Gejl\Http\Controllers\Auth;
+<?php namespace GejlLaravel\Http\Controllers\Auth;
 
-use Gejl\Http\Controllers\Controller;
+use GejlLaravel\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller {

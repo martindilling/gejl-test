@@ -1,4 +1,4 @@
-<?php namespace Gejl\Console\Commands;
+<?php namespace GejlLaravel\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;

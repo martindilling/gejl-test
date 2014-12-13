@@ -1,4 +1,4 @@
-<?php namespace Gejl\Http\Middleware;
+<?php namespace GejlLaravel\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;

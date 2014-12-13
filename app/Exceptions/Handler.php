@@ -1,4 +1,4 @@
-<?php namespace Gejl\Exceptions;
+<?php namespace GejlLaravel\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;

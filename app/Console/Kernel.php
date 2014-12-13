@@ -1,4 +1,4 @@
-<?php namespace Gejl\Console;
+<?php namespace GejlLaravel\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -11,7 +11,7 @@ class Kernel extends ConsoleKernel {
 	 * @var array
 	 */
 	protected $commands = [
-		'Gejl\Console\Commands\InspireCommand',
+		'GejlLaravel\Console\Commands\InspireCommand',
 	];
 
 	/**

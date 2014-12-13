@@ -1,6 +1,6 @@
-<?php namespace Gejl\Services;
+<?php namespace GejlLaravel\Services;
 
-use Gejl\User;
+use GejlLaravel\User;
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 

@@ -1,4 +1,4 @@
-<?php namespace Gejl\Http\Controllers;
+<?php namespace GejlLaravel\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;

@@ -1,4 +1,4 @@
-<?php namespace Gejl\Http\Controllers;
+<?php namespace GejlLaravel\Http\Controllers;
 
 class HomeController extends Controller {
 

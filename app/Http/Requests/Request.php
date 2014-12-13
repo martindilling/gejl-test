@@ -1,4 +1,4 @@
-<?php namespace Gejl\Http\Requests;
+<?php namespace GejlLaravel\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

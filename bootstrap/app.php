@@ -28,17 +28,17 @@ $app = new Illuminate\Foundation\Application(
 
 $app->singleton(
 	'Illuminate\Contracts\Http\Kernel',
-	'Gejl\Http\Kernel'
+	'GejlLaravel\Http\Kernel'
 );
 
 $app->singleton(
 	'Illuminate\Contracts\Console\Kernel',
-	'Gejl\Console\Kernel'
+	'GejlLaravel\Console\Kernel'
 );
 
 $app->singleton(
 	'Illuminate\Contracts\Debug\ExceptionHandler',
-	'Gejl\Exceptions\Handler'
+	'GejlLaravel\Exceptions\Handler'
 );
 
 /*
