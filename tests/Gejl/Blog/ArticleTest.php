@@ -1,0 +1,67 @@
+<?php namespace Gejl\Blog;
+
+use Gejl\ValueObjects\DateTime\DateTime;
+use Gejl\ValueObjects\String\Slug;
+use ValueObjects\String\String;
+
+class ArticleTest extends \TestCase
+{
+    /** @test */
+    public function can_initialize_a_new_empty_post()
+    {
+        $article = new FinalArticle();
+
+        $dateTime    = new \DateTime('now');
+        $isoDateTime = $dateTime->format(\DateTime::ISO8601);
+
+        $this->assertInstanceOf(String::class, $article->getTitle());
+        $this->assertEquals('', (string) $article->getTitle());
+
+        $this->assertInstanceOf(Slug::class, $article->getSlug());
+        $this->assertEquals('', (string) $article->getSlug());
+
+        $this->assertInstanceOf(DateTime::class, $article->getPublishAt());
+        $this->assertEquals($isoDateTime, (string) $article->getPublishAt());
+
+        $this->assertInstanceOf(String::class, $article->getBody());
+        $this->assertEquals('', (string) $article->getBody());
+    }
+
+    /** @test */
+    public function can_initialize_with_data()
+    {
+        $article = new FinalArticle();
+
+        $dateTime    = new \DateTime('now');
+        $isoDateTime = $dateTime->format(\DateTime::ISO8601);
+
+        $article->setTitle('Some Post');
+        $article->setSlug('some-post');
+        $article->setPublishAt('now');
+        $article->setBody('Lorem ipsum');
+
+        $this->assertEquals('Some Post', (string) $article->getTitle());
+        $this->assertEquals('some-post', (string) $article->getSlug());
+        $this->assertEquals($isoDateTime, (string) $article->getPublishAt());
+        $this->assertEquals('Lorem ipsum', (string) $article->getBody());
+    }
+
+    /** @test */
+    public function can_see_if_article_is_public()
+    {
+        $articlePast = new FinalArticle();
+        $articleFuture = new FinalArticle();
+        $draftPast = new DraftArticle();
+        $draftFuture = new DraftArticle();
+
+        $articlePast->setPublishAt('-1 day');
+        $articleFuture->setPublishAt('+1 day');
+        $draftPast->setPublishAt('-1 day');
+        $draftFuture->setPublishAt('+1 day');
+
+        $this->assertTrue($articlePast->isPublic(), 'Article published in the past should be public!');
+        $this->assertFalse($articleFuture->isPublic(), 'Article published in the future should not be public!');
+        $this->assertFalse($draftPast->isPublic(), 'Draft published in the past should not be public!');
+        $this->assertFalse($draftFuture->isPublic(), 'Draft published in the future should not be public!');
+    }
+}
