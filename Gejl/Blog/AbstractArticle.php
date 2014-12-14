@@ -6,11 +6,32 @@ use Gejl\ValueObjects\DateTime\DateTime;
 
 abstract class AbstractArticle
 {
+    /**
+     * @var \ValueObjects\String\String
+     */
     protected $title;
+    
+    /**
+     * @var \ValueObjects\String\String
+     */
     protected $slug;
+    
+    /**
+     * @var \Gejl\ValueObjects\DateTime\DateTime
+     */
     protected $publishAt;
+    
+    /**
+     * @var \ValueObjects\String\String
+     */
     protected $body;
 
+    /**
+     * @param string $title
+     * @param string $slug
+     * @param string $publishAt
+     * @param string $body
+     */
     function __construct($title = '', $slug = '', $publishAt = 'now', $body = '')
     {
         $this->title     = String::fromNative($title);
@@ -19,37 +40,65 @@ abstract class AbstractArticle
         $this->body      = String::fromNative($body);
     }
 
+    /**
+     * @param string $title
+     */
     public function setTitle($title)
     {
         $this->title = String::fromNative($title);
     }
+
+    /**
+     * @return \ValueObjects\String\String
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
+    /**
+     * @param string $slug
+     */
     public function setSlug($slug)
     {
         $this->slug = Slug::fromNative($slug);
     }
+
+    /**
+     * @return \ValueObjects\String\String
+     */
     public function getSlug()
     {
         return $this->slug;
     }
 
+    /**
+     * @param string $publishAt
+     */
     public function setPublishAt($publishAt)
     {
         $this->publishAt = DateTime::fromNativeDateTime(new \DateTime($publishAt));
     }
+
+    /**
+     * @return \Gejl\ValueObjects\DateTime\DateTime
+     */
     public function getPublishAt()
     {
         return $this->publishAt;
     }
 
+    /**
+     * @param string $body
+     */
     public function setBody($body)
     {
         $this->body = String::fromNative($body);
     }
+
+    /**
+     * @return \ValueObjects\String\String
+     */
     public function getBody()
     {
         return $this->body;
