@@ -70,22 +70,22 @@ class ArticleTest extends \TestCase
         $article->setPublishAt('now');
         $article->setBody('Lorem ipsum');
 
-        $this->assertEquals($uuid->toNative(),       (string) $article->getIdentity());
-        $this->assertEquals('en',                    (string) $article->getLocale());
-        $this->assertEquals('English',               (string) $article->getLocale()->getLanguageName());
-        $this->assertEquals('Some Post',             (string) $article->getTitle());
-        $this->assertEquals('some-post',             (string) $article->getSlug());
+        $this->assertEquals($uuid->toNative(), (string) $article->getIdentity());
+        $this->assertEquals('en', (string) $article->getLocale());
+        $this->assertEquals('English', (string) $article->getLocale()->getLanguageName());
+        $this->assertEquals('Some Post', (string) $article->getTitle());
+        $this->assertEquals('some-post', (string) $article->getSlug());
         $this->assertEquals($this->dateTimeNowIso(), (string) $article->getPublishAt());
-        $this->assertEquals('Lorem ipsum',           (string) $article->getBody());
+        $this->assertEquals('Lorem ipsum', (string) $article->getBody());
     }
 
     /** @test */
     public function can_see_if_article_is_public()
     {
-        $articlePast = new FinalArticle();
+        $articlePast   = new FinalArticle();
         $articleFuture = new FinalArticle();
-        $draftPast = new DraftArticle();
-        $draftFuture = new DraftArticle();
+        $draftPast     = new DraftArticle();
+        $draftFuture   = new DraftArticle();
 
         $articlePast->setPublishAt('-1 day');
         $articleFuture->setPublishAt('+1 day');
@@ -111,18 +111,18 @@ class ArticleTest extends \TestCase
         $draft->setSlug('some-post');
         $draft->setPublishAt('now');
         $draft->setBody('Lorem ipsum');
-        
+
         $final = $draft->makeFinal();
 
         $this->assertTrue($draft->isDraft(), 'Draft article should be a draft!');
         $this->assertFalse($final->isDraft(), 'Final article should not be a draft!');
-        $this->assertEquals($uuid->toNative(),       (string) $final->getIdentity());
-        $this->assertEquals('da',                    (string) $final->getLocale());
-        $this->assertEquals('Danish',                (string) $final->getLocale()->getLanguageName());
-        $this->assertEquals('Some Post',             (string) $final->getTitle());
-        $this->assertEquals('some-post',             (string) $final->getSlug());
+        $this->assertEquals($uuid->toNative(), (string) $final->getIdentity());
+        $this->assertEquals('da', (string) $final->getLocale());
+        $this->assertEquals('Danish', (string) $final->getLocale()->getLanguageName());
+        $this->assertEquals('Some Post', (string) $final->getTitle());
+        $this->assertEquals('some-post', (string) $final->getSlug());
         $this->assertEquals($this->dateTimeNowIso(), (string) $final->getPublishAt());
-        $this->assertEquals('Lorem ipsum',           (string) $final->getBody());
+        $this->assertEquals('Lorem ipsum', (string) $final->getBody());
     }
 
     /** @test */
@@ -143,19 +143,20 @@ class ArticleTest extends \TestCase
 
         $this->assertFalse($final->isDraft(), 'Final article should not be a draft!');
         $this->assertTrue($draft->isDraft(), 'Draft article should be a draft!');
-        $this->assertEquals($uuid->toNative(),       (string) $draft->getIdentity());
-        $this->assertEquals('da',                    (string) $draft->getLocale());
-        $this->assertEquals('Danish',                (string) $draft->getLocale()->getLanguageName());
-        $this->assertEquals('Some Post',             (string) $draft->getTitle());
-        $this->assertEquals('some-post',             (string) $draft->getSlug());
+        $this->assertEquals($uuid->toNative(), (string) $draft->getIdentity());
+        $this->assertEquals('da', (string) $draft->getLocale());
+        $this->assertEquals('Danish', (string) $draft->getLocale()->getLanguageName());
+        $this->assertEquals('Some Post', (string) $draft->getTitle());
+        $this->assertEquals('some-post', (string) $draft->getSlug());
         $this->assertEquals($this->dateTimeNowIso(), (string) $draft->getPublishAt());
-        $this->assertEquals('Lorem ipsum',           (string) $draft->getBody());
+        $this->assertEquals('Lorem ipsum', (string) $draft->getBody());
     }
 
 
     private function dateTimeNowIso()
     {
-        $dateTime    = new \DateTime('now');
+        $dateTime = new \DateTime('now');
+
         return $dateTime->format(\DateTime::ISO8601);
     }
 }
