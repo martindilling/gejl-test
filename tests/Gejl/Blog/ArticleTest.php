@@ -11,8 +11,23 @@ class ArticleTest extends \TestCase
     {
         $article = new FinalArticle();
 
-        $dateTime    = new \DateTime('now');
-        $isoDateTime = $dateTime->format(\DateTime::ISO8601);
+        $this->assertInstanceOf(String::class, $article->getTitle());
+        $this->assertEquals('', (string) $article->getTitle());
+
+        $this->assertInstanceOf(Slug::class, $article->getSlug());
+        $this->assertEquals('', (string) $article->getSlug());
+
+        $this->assertInstanceOf(DateTime::class, $article->getPublishAt());
+        $this->assertEquals($this->dateTimeNowIso(), (string) $article->getPublishAt());
+
+        $this->assertInstanceOf(String::class, $article->getBody());
+        $this->assertEquals('', (string) $article->getBody());
+    }
+
+    /** @test */
+    public function can_initialize_a_draft()
+    {
+        $article = new DraftArticle();
 
         $this->assertInstanceOf(String::class, $article->getTitle());
         $this->assertEquals('', (string) $article->getTitle());
@@ -21,7 +36,7 @@ class ArticleTest extends \TestCase
         $this->assertEquals('', (string) $article->getSlug());
 
         $this->assertInstanceOf(DateTime::class, $article->getPublishAt());
-        $this->assertEquals($isoDateTime, (string) $article->getPublishAt());
+        $this->assertEquals($this->dateTimeNowIso(), (string) $article->getPublishAt());
 
         $this->assertInstanceOf(String::class, $article->getBody());
         $this->assertEquals('', (string) $article->getBody());
@@ -32,9 +47,6 @@ class ArticleTest extends \TestCase
     {
         $article = new FinalArticle();
 
-        $dateTime    = new \DateTime('now');
-        $isoDateTime = $dateTime->format(\DateTime::ISO8601);
-
         $article->setTitle('Some Post');
         $article->setSlug('some-post');
         $article->setPublishAt('now');
@@ -42,7 +54,7 @@ class ArticleTest extends \TestCase
 
         $this->assertEquals('Some Post', (string) $article->getTitle());
         $this->assertEquals('some-post', (string) $article->getSlug());
-        $this->assertEquals($isoDateTime, (string) $article->getPublishAt());
+        $this->assertEquals($this->dateTimeNowIso(), (string) $article->getPublishAt());
         $this->assertEquals('Lorem ipsum', (string) $article->getBody());
     }
 
@@ -63,5 +75,31 @@ class ArticleTest extends \TestCase
         $this->assertFalse($articleFuture->isPublic(), 'Article published in the future should not be public!');
         $this->assertFalse($draftPast->isPublic(), 'Draft published in the past should not be public!');
         $this->assertFalse($draftFuture->isPublic(), 'Draft published in the future should not be public!');
+    }
+
+    /** @test */
+    public function can_make_final_from_draft()
+    {
+        $draft = new DraftArticle();
+
+        $draft->setTitle('Some Post');
+        $draft->setSlug('some-post');
+        $draft->setPublishAt('now');
+        $draft->setBody('Lorem ipsum');
+        
+        $final = $draft->makeFinal();
+
+        $this->assertTrue($draft->isDraft(), 'Draft article should be a draft!');
+        $this->assertFalse($final->isDraft(), 'Final article should not be a draft!');
+        $this->assertEquals('Some Post', (string) $final->getTitle());
+        $this->assertEquals('some-post', (string) $final->getSlug());
+        $this->assertEquals($this->dateTimeNowIso(), (string) $final->getPublishAt());
+        $this->assertEquals('Lorem ipsum', (string) $final->getBody());
+    }
+
+    private function dateTimeNowIso()
+    {
+        $dateTime    = new \DateTime('now');
+        return $dateTime->format(\DateTime::ISO8601);
     }
 }
