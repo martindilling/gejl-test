@@ -2,6 +2,7 @@
 
 use Gejl\ValueObjects\DateTime\DateTime;
 use Gejl\ValueObjects\String\Slug;
+use ValueObjects\Identity\UUID;
 use ValueObjects\String\String;
 
 class ArticleTest extends \TestCase
@@ -10,6 +11,9 @@ class ArticleTest extends \TestCase
     public function can_initialize_a_new_empty_post()
     {
         $article = new FinalArticle();
+
+        $this->assertInstanceOf(UUID::class, $article->getIdentity());
+        $this->assertRegexp('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', (string) $article->getIdentity());
 
         $this->assertInstanceOf(String::class, $article->getTitle());
         $this->assertEquals('', (string) $article->getTitle());
@@ -29,6 +33,9 @@ class ArticleTest extends \TestCase
     {
         $article = new DraftArticle();
 
+        $this->assertInstanceOf(UUID::class, $article->getIdentity());
+        $this->assertRegexp('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', (string) $article->getIdentity());
+
         $this->assertInstanceOf(String::class, $article->getTitle());
         $this->assertEquals('', (string) $article->getTitle());
 
@@ -47,11 +54,15 @@ class ArticleTest extends \TestCase
     {
         $article = new FinalArticle();
 
+        $uuid = new UUID();
+
+        $article->setIdentity($uuid->toNative());
         $article->setTitle('Some Post');
         $article->setSlug('some-post');
         $article->setPublishAt('now');
         $article->setBody('Lorem ipsum');
 
+        $this->assertEquals($uuid->toNative(), (string) $article->getIdentity());
         $this->assertEquals('Some Post', (string) $article->getTitle());
         $this->assertEquals('some-post', (string) $article->getSlug());
         $this->assertEquals($this->dateTimeNowIso(), (string) $article->getPublishAt());
@@ -116,6 +127,7 @@ class ArticleTest extends \TestCase
         $this->assertEquals($this->dateTimeNowIso(), (string) $draft->getPublishAt());
         $this->assertEquals('Lorem ipsum', (string) $draft->getBody());
     }
+
 
     private function dateTimeNowIso()
     {
