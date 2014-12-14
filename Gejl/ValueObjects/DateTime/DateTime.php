@@ -21,6 +21,16 @@ class DateTime extends \ValueObjects\DateTime\DateTime
     {
         return !$this->isFuture();
     }
+
+    /**
+     * Returns DateTime as string in ISO8601 with format "Y-m-d\TH:i:sO"
+     *
+     * @return string
+     */
+    public function toISO8601()
+    {
+        return $this->toNativeDateTime()->format(\DateTime::ISO8601);
+    }
     
     /**
      * Returns DateTime as string in ISO8601 with format "Y-m-d\TH:i:sO"
@@ -29,6 +39,6 @@ class DateTime extends \ValueObjects\DateTime\DateTime
      */
     public function __toString()
     {
-        return $this->toNativeDateTime()->format(\DateTime::ISO8601);
+        return $this->toISO8601();
     }
 }

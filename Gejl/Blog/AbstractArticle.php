@@ -49,10 +49,10 @@ abstract class AbstractArticle
     public static function createFromArticle(AbstractArticle $article)
     {
         return new static(
-            (string) $article->getTitle(),
-            (string) $article->getSlug(),
-            (string) $article->getPublishAt(),
-            (string) $article->getBody()
+            $article->getTitle()->toNative(),
+            $article->getSlug()->toNative(),
+            $article->getPublishAt()->toISO8601(),
+            $article->getBody()->toNative()
         );
     }
 
