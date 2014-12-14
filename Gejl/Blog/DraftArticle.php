@@ -12,6 +12,11 @@ class DraftArticle extends AbstractArticle
         return true;
     }
 
+    /**
+     * Make draft to final article
+     * 
+     * @return FinalArticle
+     */
     public function makeFinal()
     {
         return new FinalArticle(
