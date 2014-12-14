@@ -1,6 +1,7 @@
 <?php namespace Gejl\Blog;
 
 use Gejl\ValueObjects\DateTime\DateTime;
+use Gejl\ValueObjects\Internationalization\Locale;
 use Gejl\ValueObjects\String\Slug;
 use ValueObjects\Identity\UUID;
 use ValueObjects\String\String;
@@ -11,6 +12,9 @@ class ArticleTest extends \TestCase
     public function can_initialize_a_new_empty_post()
     {
         $article = new FinalArticle();
+
+        $this->assertInstanceOf(Locale::class, $article->getLocale());
+        $this->assertEquals('en', (string) $article->getLocale());
 
         $this->assertInstanceOf(UUID::class, $article->getIdentity());
         $this->assertRegexp('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', (string) $article->getIdentity());
@@ -32,6 +36,9 @@ class ArticleTest extends \TestCase
     public function can_initialize_a_draft()
     {
         $article = new DraftArticle();
+
+        $this->assertInstanceOf(Locale::class, $article->getLocale());
+        $this->assertEquals('en', (string) $article->getLocale());
 
         $this->assertInstanceOf(UUID::class, $article->getIdentity());
         $this->assertRegexp('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', (string) $article->getIdentity());
@@ -57,16 +64,19 @@ class ArticleTest extends \TestCase
         $uuid = new UUID();
 
         $article->setIdentity($uuid->toNative());
+        $article->setLocale('en');
         $article->setTitle('Some Post');
         $article->setSlug('some-post');
         $article->setPublishAt('now');
         $article->setBody('Lorem ipsum');
 
-        $this->assertEquals($uuid->toNative(), (string) $article->getIdentity());
-        $this->assertEquals('Some Post', (string) $article->getTitle());
-        $this->assertEquals('some-post', (string) $article->getSlug());
+        $this->assertEquals($uuid->toNative(),       (string) $article->getIdentity());
+        $this->assertEquals('en',                    (string) $article->getLocale());
+        $this->assertEquals('English',               (string) $article->getLocale()->getLanguageName());
+        $this->assertEquals('Some Post',             (string) $article->getTitle());
+        $this->assertEquals('some-post',             (string) $article->getSlug());
         $this->assertEquals($this->dateTimeNowIso(), (string) $article->getPublishAt());
-        $this->assertEquals('Lorem ipsum', (string) $article->getBody());
+        $this->assertEquals('Lorem ipsum',           (string) $article->getBody());
     }
 
     /** @test */
@@ -93,6 +103,10 @@ class ArticleTest extends \TestCase
     {
         $draft = new DraftArticle();
 
+        $uuid = new UUID();
+
+        $draft->setIdentity($uuid->toNative());
+        $draft->setLocale('da');
         $draft->setTitle('Some Post');
         $draft->setSlug('some-post');
         $draft->setPublishAt('now');
@@ -102,10 +116,13 @@ class ArticleTest extends \TestCase
 
         $this->assertTrue($draft->isDraft(), 'Draft article should be a draft!');
         $this->assertFalse($final->isDraft(), 'Final article should not be a draft!');
-        $this->assertEquals('Some Post', (string) $final->getTitle());
-        $this->assertEquals('some-post', (string) $final->getSlug());
+        $this->assertEquals($uuid->toNative(),       (string) $final->getIdentity());
+        $this->assertEquals('da',                    (string) $final->getLocale());
+        $this->assertEquals('Danish',                (string) $final->getLocale()->getLanguageName());
+        $this->assertEquals('Some Post',             (string) $final->getTitle());
+        $this->assertEquals('some-post',             (string) $final->getSlug());
         $this->assertEquals($this->dateTimeNowIso(), (string) $final->getPublishAt());
-        $this->assertEquals('Lorem ipsum', (string) $final->getBody());
+        $this->assertEquals('Lorem ipsum',           (string) $final->getBody());
     }
 
     /** @test */
@@ -113,19 +130,26 @@ class ArticleTest extends \TestCase
     {
         $final = new FinalArticle();
 
+        $uuid = new UUID();
+
+        $final->setIdentity($uuid->toNative());
+        $final->setLocale('da');
         $final->setTitle('Some Post');
         $final->setSlug('some-post');
         $final->setPublishAt('now');
         $final->setBody('Lorem ipsum');
-        
+
         $draft = $final->makeDraft();
 
         $this->assertFalse($final->isDraft(), 'Final article should not be a draft!');
         $this->assertTrue($draft->isDraft(), 'Draft article should be a draft!');
-        $this->assertEquals('Some Post', (string) $draft->getTitle());
-        $this->assertEquals('some-post', (string) $draft->getSlug());
+        $this->assertEquals($uuid->toNative(),       (string) $draft->getIdentity());
+        $this->assertEquals('da',                    (string) $draft->getLocale());
+        $this->assertEquals('Danish',                (string) $draft->getLocale()->getLanguageName());
+        $this->assertEquals('Some Post',             (string) $draft->getTitle());
+        $this->assertEquals('some-post',             (string) $draft->getSlug());
         $this->assertEquals($this->dateTimeNowIso(), (string) $draft->getPublishAt());
-        $this->assertEquals('Lorem ipsum', (string) $draft->getBody());
+        $this->assertEquals('Lorem ipsum',           (string) $draft->getBody());
     }
 
 

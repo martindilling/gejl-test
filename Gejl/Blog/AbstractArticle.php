@@ -1,5 +1,6 @@
 <?php namespace Gejl\Blog;
 
+use Gejl\ValueObjects\Internationalization\Locale;
 use ValueObjects\Identity\UUID;
 use ValueObjects\String\String;
 use Gejl\ValueObjects\String\Slug;
@@ -13,12 +14,17 @@ abstract class AbstractArticle
     protected $identity;
 
     /**
+     * @var \Gejl\ValueObjects\Internationalization\Locale
+     */
+    protected $locale;
+
+    /**
      * @var \ValueObjects\String\String
      */
     protected $title;
 
     /**
-     * @var \ValueObjects\String\String
+     * @var \Gejl\ValueObjects\String\Slug
      */
     protected $slug;
 
@@ -33,15 +39,22 @@ abstract class AbstractArticle
     protected $body;
 
     /**
+     * @var string
+     */
+    protected $defaultLanguage = 'en';
+
+    /**
      * @param string $identity
+     * @param string $locale
      * @param string $title
      * @param string $slug
      * @param string $publishAt
      * @param string $body
      */
-    function __construct($identity = null, $title = '', $slug = '', $publishAt = 'now', $body = '')
+    function __construct($identity = null, $locale = null, $title = '', $slug = '', $publishAt = 'now', $body = '')
     {
         $this->setIdentity($identity);
+        $this->setLocale($locale);
         $this->setTitle($title);
         $this->setSlug($slug);
         $this->setPublishAt($publishAt);
@@ -59,6 +72,7 @@ abstract class AbstractArticle
         $new = new static();
 
         $new->setIdentity($article->getIdentity()->toNative());
+        $new->setLocale($article->getLocale()->toNative());
         $new->setTitle($article->getTitle()->toNative());
         $new->setSlug($article->getSlug()->toNative());
         $new->setPublishAt($article->getPublishAt()->toISO8601());
@@ -84,6 +98,25 @@ abstract class AbstractArticle
     public function getIdentity()
     {
         return $this->identity;
+    }
+
+    /**
+     * @param string $locale
+     */
+    public function setLocale($locale)
+    {
+        if (is_null($locale)) {
+            $locale = $this->defaultLanguage;
+        }
+        $this->locale = Locale::fromNative($locale);
+    }
+
+    /**
+     * @return \Gejl\ValueObjects\Internationalization\Locale
+     */
+    public function getLocale()
+    {
+        return $this->locale;
     }
 
     /**
