@@ -19,11 +19,6 @@ class DraftArticle extends AbstractArticle
      */
     public function makeFinal()
     {
-        return new FinalArticle(
-            (string) $this->getTitle(),
-            (string) $this->getSlug(),
-            (string) $this->getPublishAt(),
-            (string) $this->getBody()
-        );
+        return FinalArticle::createFromArticle($this);
     }
 }

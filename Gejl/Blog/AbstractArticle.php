@@ -41,6 +41,22 @@ abstract class AbstractArticle
     }
 
     /**
+     * Create new article from an article instance.
+     * 
+     * @param AbstractArticle $article
+     * @return static
+     */
+    public static function createFromArticle(AbstractArticle $article)
+    {
+        return new static(
+            (string) $article->getTitle(),
+            (string) $article->getSlug(),
+            (string) $article->getPublishAt(),
+            (string) $article->getBody()
+        );
+    }
+
+    /**
      * @param string $title
      */
     public function setTitle($title)
