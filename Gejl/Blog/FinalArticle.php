@@ -11,4 +11,19 @@ class FinalArticle extends AbstractArticle
     {
         return false;
     }
+
+    /**
+     * Make draft to final article
+     *
+     * @return DraftArticle
+     */
+    public function makeDraft()
+    {
+        return new DraftArticle(
+            (string) $this->getTitle(),
+            (string) $this->getSlug(),
+            (string) $this->getPublishAt(),
+            (string) $this->getBody()
+        );
+    }
 }

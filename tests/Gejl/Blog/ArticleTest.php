@@ -97,6 +97,26 @@ class ArticleTest extends \TestCase
         $this->assertEquals('Lorem ipsum', (string) $final->getBody());
     }
 
+    /** @test */
+    public function can_make_draft_from_final()
+    {
+        $final = new FinalArticle();
+
+        $final->setTitle('Some Post');
+        $final->setSlug('some-post');
+        $final->setPublishAt('now');
+        $final->setBody('Lorem ipsum');
+        
+        $draft = $final->makeDraft();
+
+        $this->assertFalse($final->isDraft(), 'Final article should not be a draft!');
+        $this->assertTrue($draft->isDraft(), 'Draft article should be a draft!');
+        $this->assertEquals('Some Post', (string) $draft->getTitle());
+        $this->assertEquals('some-post', (string) $draft->getSlug());
+        $this->assertEquals($this->dateTimeNowIso(), (string) $draft->getPublishAt());
+        $this->assertEquals('Lorem ipsum', (string) $draft->getBody());
+    }
+
     private function dateTimeNowIso()
     {
         $dateTime    = new \DateTime('now');
