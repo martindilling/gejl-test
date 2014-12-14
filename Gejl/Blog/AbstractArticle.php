@@ -1,5 +1,6 @@
 <?php namespace Gejl\Blog;
 
+use ValueObjects\Identity\UUID;
 use ValueObjects\String\String;
 use Gejl\ValueObjects\String\Slug;
 use Gejl\ValueObjects\DateTime\DateTime;
@@ -7,37 +8,44 @@ use Gejl\ValueObjects\DateTime\DateTime;
 abstract class AbstractArticle
 {
     /**
+     * @var \ValueObjects\Identity\UUID
+     */
+    protected $identity;
+
+    /**
      * @var \ValueObjects\String\String
      */
     protected $title;
-    
+
     /**
      * @var \ValueObjects\String\String
      */
     protected $slug;
-    
+
     /**
      * @var \Gejl\ValueObjects\DateTime\DateTime
      */
     protected $publishAt;
-    
+
     /**
      * @var \ValueObjects\String\String
      */
     protected $body;
 
     /**
+     * @param string $identity
      * @param string $title
      * @param string $slug
      * @param string $publishAt
      * @param string $body
      */
-    function __construct($title = '', $slug = '', $publishAt = 'now', $body = '')
+    function __construct($identity = null, $title = '', $slug = '', $publishAt = 'now', $body = '')
     {
-        $this->title     = String::fromNative($title);
-        $this->slug      = Slug::fromNative($slug);
-        $this->publishAt = DateTime::fromNativeDateTime(new \DateTime($publishAt));
-        $this->body      = String::fromNative($body);
+        $this->setIdentity($identity);
+        $this->setTitle($title);
+        $this->setSlug($slug);
+        $this->setPublishAt($publishAt);
+        $this->setBody($body);
     }
 
     /**
@@ -48,12 +56,34 @@ abstract class AbstractArticle
      */
     public static function createFromArticle(AbstractArticle $article)
     {
-        return new static(
-            $article->getTitle()->toNative(),
-            $article->getSlug()->toNative(),
-            $article->getPublishAt()->toISO8601(),
-            $article->getBody()->toNative()
-        );
+        $new = new static();
+
+        $new->setIdentity($article->getIdentity()->toNative());
+        $new->setTitle($article->getTitle()->toNative());
+        $new->setSlug($article->getSlug()->toNative());
+        $new->setPublishAt($article->getPublishAt()->toISO8601());
+        $new->setBody($article->getBody()->toNative());
+        
+        return $new;
+    }
+
+    /**
+     * @param string $identity
+     */
+    public function setIdentity($identity)
+    {
+        if (is_null($identity)) {
+            $identity = UUID::generateAsString();
+        }
+        $this->identity = UUID::fromNative($identity);
+    }
+
+    /**
+     * @return \ValueObjects\Identity\UUID
+     */
+    public function getIdentity()
+    {
+        return $this->identity;
     }
 
     /**
