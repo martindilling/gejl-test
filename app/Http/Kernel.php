@@ -1,4 +1,4 @@
-<?php namespace GejlLaravel\Http;
+<?php namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -24,9 +24,9 @@ class Kernel extends HttpKernel {
 	 * @var array
 	 */
 	protected $routeMiddleware = [
-		'auth' => 'GejlLaravel\Http\Middleware\Authenticate',
+		'auth' => 'App\Http\Middleware\Authenticate',
 		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
-		'guest' => 'GejlLaravel\Http\Middleware\RedirectIfAuthenticated',
+		'guest' => 'App\Http\Middleware\RedirectIfAuthenticated',
 	];
 
 }

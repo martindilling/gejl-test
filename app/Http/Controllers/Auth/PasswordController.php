@@ -1,6 +1,6 @@
-<?php namespace GejlLaravel\Http\Controllers\Auth;
+<?php namespace App\Http\Controllers\Auth;
 
-use GejlLaravel\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class PasswordController extends Controller {

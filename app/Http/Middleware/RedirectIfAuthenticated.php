@@ -1,11 +1,10 @@
-<?php namespace GejlLaravel\Http\Middleware;
+<?php namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Contracts\Routing\Middleware;
 
-class RedirectIfAuthenticated implements Middleware {
+class RedirectIfAuthenticated {
 
 	/**
 	 * The Guard implementation.
