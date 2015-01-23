@@ -12,6 +12,10 @@ class ArticleTest extends \TestCase
     public function can_initialize_a_new_empty_post()
     {
         $article = new FinalArticle();
+        $dateTimeNow = $this->dateTimeNowIso();
+
+        $this->assertInstanceOf(FinalArticle::class, $article);
+        $this->assertFalse($article->isDraft());
 
         $this->assertInstanceOf(Locale::class, $article->getLocale());
         $this->assertEquals('en', (string) $article->getLocale());
@@ -26,7 +30,7 @@ class ArticleTest extends \TestCase
         $this->assertEquals('', (string) $article->getSlug());
 
         $this->assertInstanceOf(DateTime::class, $article->getPublishAt());
-        $this->assertEquals($this->dateTimeNowIso(), (string) $article->getPublishAt());
+        $this->assertEquals($dateTimeNow, (string) $article->getPublishAt());
 
         $this->assertInstanceOf(String::class, $article->getBody());
         $this->assertEquals('', (string) $article->getBody());
@@ -36,6 +40,9 @@ class ArticleTest extends \TestCase
     public function can_initialize_a_draft()
     {
         $article = new DraftArticle();
+
+        $this->assertInstanceOf(DraftArticle::class, $article);
+        $this->assertTrue($article->isDraft());
 
         $this->assertInstanceOf(Locale::class, $article->getLocale());
         $this->assertEquals('en', (string) $article->getLocale());
